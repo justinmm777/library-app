@@ -1,0 +1,73 @@
+html { 
+    min-height: 100%;
+    box-sizing: border-box;
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif, Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+h1,
+h2 {
+    margin: 0;
+}
+
+.container {
+    display: flex;
+}
+
+.headingContainer {
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid red;
+}
+
+
+.btnAdd {
+    padding: 1rem;
+    font-size: 1.2em;
+    background-color: rgb(136, 216, 17);
+    border-radius: 1em;
+}
+
+.formPopup {
+    display: none;
+    border: 1px solid green;
+}
+.formPopup {
+    display: block;
+    border: 1px solid rgb(136, 216, 17);
+    background-color: skyblue;
+}
+
+.displayCards {
+    border: 1px solid red;
+    display: flex;
+}
+
+.card {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 200px;
+    height: 200px;
+    border: 1px solid green;
+}
+
+.btnRemove {
+    padding: 1rem;
+    background-color: hotpink;
+    font-size: 1.2rem;
+}
+
+
+
+.footer {
+    display: flex;
+    align-self: center;
+    bottom: 0%;
+    position: fixed;
+}
