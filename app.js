@@ -1,44 +1,51 @@
 let myLibrary = [
-    {
-        title:"The comic book",
-        author:"ju",
-        pages: 100,
-        isRead: true,
-    },
-    {
-        title:"The book",
-        author:"leo",
-        pages: 50,
-        isRead: false,
-    },
+    // {
+    //     title:"The comic book",
+    //     author:"Justin",
+    //     pages: 100,
+    //     isRead: "Read",
+    // },
 ];
 
 // selecting html elements
 const form = document.querySelector("form");
 const displayCards = document.querySelector(".displayCards");
 const viewCard = document.querySelector("card");
-const addBook = document.querySelector(".btnAdd");
+
 
 function Book(title, author, pages, isRead) {
     this.title = title;
     this.author = author;
     this.pages = pages;
+    this.isRead = isRead;
 }
+
 Book.prototype.info = function() {
     return `${this.title}, ${this.author}, ${this.pages}, ${this.isRead}`;
 }
-Book.prototype.isRead = false;
 
-
+// User Interface
 const addBookToLibrary = function(event) {
     event.preventDefault();
         title = document.getElementById("title").value;
         author = document.getElementById("author").value;
         pages = document.getElementById("pages").value;
         isRead = document.getElementById("isRead").value;
+        if (isRead =="on") {
+            isRead = "Read";
+        } else {
+            isRead = "Not Read"
+        }
 
     const newBookDetails = new Book(title, author, pages, isRead);
     myLibrary.push(newBookDetails);
+    console.log(myLibrary);
+
+    // Clear form
+    document.getElementById("title").value = "";
+    document.getElementById("author").value = "";
+    document.getElementById("pages").value = "";
+    document.getElementById("isRead").checked = false;
 }
 
 
@@ -58,28 +65,30 @@ const createCards = function(books, viewCard) {
     newDiv.innerHTML = card;
     displayCards.appendChild(newDiv.firstChild);
     })
-    
 };
 
 
-// add book details to myLibrary
+// Show and hide form functions
+const hideEntryForm = () => {
+    const entryForm = document.getElementById("bookEntry");
+    entryForm.style.display = "none";
+}
 
-document.addEventListener("DOMContentLoaded", function() {
-    const btnSubmit = document.querySelector(".submit")
+const showEntryForm = () => {
+    const entryForm = document.getElementById("bookEntry");
+    entryForm.style.display = "block";
+}
+// add book details to myLibrary
+document.addEventListener("DOMContentLoaded", function(e) {
+    e.preventDefault();
+    hideEntryForm();
+    const btnSubmit = document.querySelector(".btnSubmit")
     btnSubmit.addEventListener("click", addBookToLibrary);
-    const form = document.querySelector("form");
-    form.reset();
+    btnSubmit.addEventListener("click", hideEntryForm);
 });
 
-// hide form and show
-const entryForm = document.getElementById("bookEntry");
-const showForm = function() {
-    entryForm.classList.toggle("toggle-on");
-}
-addBook.addEventListener("click", showForm());
+// show entry form
+const addBook = document.querySelector(".btnAdd");
+addBook.addEventListener("click", showEntryForm);
 
 createCards(myLibrary);
-
-
-
-console.log(myLibrary);
