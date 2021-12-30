@@ -1,17 +1,18 @@
 let myLibrary = [
-    // {
-    //     title:"The comic book",
-    //     author:"Justin",
-    //     pages: 100,
-    //     isRead: "Read",
-    // },
+    {
+        title:"The comic book",
+        author:"Justin",
+        pages: 100,
+        isRead: "Read",
+    },
 ];
 
 // selecting html elements
 const form = document.querySelector("form");
 const displayCards = document.querySelector(".displayCards");
 const viewCard = document.querySelector("card");
-
+const addBook = document.querySelector(".btnAdd");
+const btnSubmit = document.querySelector(".btnSubmit");
 
 function Book(title, author, pages, isRead) {
     this.title = title;
@@ -19,10 +20,26 @@ function Book(title, author, pages, isRead) {
     this.pages = pages;
     this.isRead = isRead;
 }
-
 Book.prototype.info = function() {
     return `${this.title}, ${this.author}, ${this.pages}, ${this.isRead}`;
 }
+
+// function that loops through the array and displays each book on the page
+const createCards = function() {
+    myLibrary.forEach(book => {
+        const newDiv = document.createElement("div");
+        newDiv.innerHTML = `<div class="card">
+        <h1>${book.title}</h1>
+        <h2>${book.author}</h2>
+        <h2>${book.pages}</h2>
+        <h2>${book.isRead}</h2>
+        <div class="remove">
+            <button class="btnRemove">Remove</button>
+        </div>
+    </div>`
+    displayCards.appendChild(newDiv);
+    });
+};
 
 // User Interface
 const addBookToLibrary = function(event) {
@@ -46,27 +63,10 @@ const addBookToLibrary = function(event) {
     document.getElementById("author").value = "";
     document.getElementById("pages").value = "";
     document.getElementById("isRead").checked = false;
+
+    createCards();
+    
 }
-
-
-const createCards = function(books, viewCard) {
-    myLibrary.forEach(function(book, i) {
-        const card = `<div class="card" data-index="${i}">
-        <h1>${book.title}</h1>
-        <h2>${book.author}</h2>
-        <h2>${book.pages}</h2>
-        <h2>${book.isRead}</h2>
-        <div class="remove">
-            <button class="btnRemove">Remove</button>
-        </div>
-    </div>`
-
-    const newDiv = document.createElement("div");
-    newDiv.innerHTML = card;
-    displayCards.appendChild(newDiv.firstChild);
-    })
-};
-
 
 // Show and hide form functions
 const hideEntryForm = () => {
@@ -78,17 +78,18 @@ const showEntryForm = () => {
     const entryForm = document.getElementById("bookEntry");
     entryForm.style.display = "block";
 }
-// add book details to myLibrary
+// add book details to myLibrary and display them on DOM
 document.addEventListener("DOMContentLoaded", function(e) {
-    e.preventDefault();
     hideEntryForm();
-    const btnSubmit = document.querySelector(".btnSubmit")
+    btnSubmit.addEventListener("click", function() {
+        displayCards.innerHTML = "";
+    })
     btnSubmit.addEventListener("click", addBookToLibrary);
     btnSubmit.addEventListener("click", hideEntryForm);
+    
 });
 
 // show entry form
-const addBook = document.querySelector(".btnAdd");
+
 addBook.addEventListener("click", showEntryForm);
 
-createCards(myLibrary);
