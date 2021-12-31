@@ -20,24 +20,26 @@ function Book(title, author, pages, isRead) {
     this.pages = pages;
     this.isRead = isRead;
 }
-Book.prototype.info = function() {
-    return `${this.title}, ${this.author}, ${this.pages}, ${this.isRead}`;
-}
 
 // function that loops through the array and displays each book on the page
 const createCards = function() {
-    myLibrary.forEach(book => {
+    myLibrary.forEach((book, i) => {
         const newDiv = document.createElement("div");
-        newDiv.innerHTML = `<div class="card">
-        <h1>${book.title}</h1>
-        <h2>${book.author}</h2>
-        <h2>${book.pages}</h2>
-        <h2>${book.isRead}</h2>
-        <div class="remove">
-            <button class="btnRemove">Remove</button>
-        </div>
-    </div>`
-    displayCards.appendChild(newDiv);
+        newDiv.innerHTML = `<div class="card" data-attribute=${i}>
+            <h1>${book.title}</h1>
+            <h2>${book.author}</h2>
+            <h2>${book.pages}</h2>
+            <h2>${book.isRead}</h2>
+            <div class="read">
+                <button class="btnRead">${book.isRead}</button>
+            </div>
+            <div class="remove">
+                <button class="btnRemove">Remove</button>
+            </div>
+            
+        </div>`
+        displayCards.appendChild(newDiv);
+        
     });
 };
 
@@ -47,13 +49,13 @@ const addBookToLibrary = function(event) {
         title = document.getElementById("title").value;
         author = document.getElementById("author").value;
         pages = document.getElementById("pages").value;
-        isRead = document.getElementById("isRead").value;
-        if (isRead =="on") {
+        bookIsRead = document.getElementById("isRead").checked;
+        if(bookIsRead) {
             isRead = "Read";
         } else {
             isRead = "Not Read"
         }
-
+     
     const newBookDetails = new Book(title, author, pages, isRead);
     myLibrary.push(newBookDetails);
     console.log(myLibrary);
@@ -64,8 +66,15 @@ const addBookToLibrary = function(event) {
     document.getElementById("pages").value = "";
     document.getElementById("isRead").checked = false;
 
-    createCards();
-    
+    createCards(); 
+
+    // Remove books
+    const btnRemove = document.querySelectorAll(".btnRemove");
+       btnRemove.forEach((btn) => {
+           btn.addEventListener("click", (e) => {
+               (e.target.parentElement.parentElement).remove();
+           })
+       })
 }
 
 // Show and hide form functions
@@ -90,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
 });
 
 // show entry form
-
 addBook.addEventListener("click", showEntryForm);
+
+
 

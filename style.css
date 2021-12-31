@@ -22,6 +22,8 @@ body {
     line-height: 1;
     font-size: 0.875rem;
     word-wrap: break-word;
+    display: flex;
+    justify-content: center;
 }
 
 h1,
@@ -147,6 +149,9 @@ input[type=checkbox] {
     align-self: center;
     bottom: 0%;
     position: fixed;
+    padding: 0.5rem;
+    font-size: 1em;
+    font-weight: bold;
 }
 
 /* Media Queries */
