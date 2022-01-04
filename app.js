@@ -55,7 +55,7 @@ const addBookToLibrary = function(event) {
      
     const newBookDetails = new Book(title, author, pages, isRead);
     myLibrary.push(newBookDetails);
-    console.log(myLibrary);
+    // console.log(myLibrary);
 
     // Clear form
     document.getElementById("title").value = "";
@@ -93,9 +93,10 @@ const addBookToLibrary = function(event) {
     
     // Remove books
     const btnRemove = document.querySelectorAll(".btnRemove");
-       btnRemove.forEach((btn) => {
+       btnRemove.forEach((btn, i) => {
            btn.addEventListener("click", (e) => {
                (e.target.parentElement.parentElement).remove();
+               myLibrary.splice(i, 1);
            })
        })
 }
@@ -113,15 +114,12 @@ const showEntryForm = () => {
 // add book details to myLibrary and display them on DOM
 document.addEventListener("DOMContentLoaded", function(e) {
     hideEntryForm();
-    btnSubmit.addEventListener("click", function() {
+    form.addEventListener('submit', function(e) {
         displayCards.innerHTML = "";
+        addBookToLibrary(e);
+        hideEntryForm();
     })
-    btnSubmit.addEventListener("click", addBookToLibrary);
-    btnSubmit.addEventListener("click", hideEntryForm);
 });
 
 // show entry form
 addBook.addEventListener("click", showEntryForm);
-
-
-
