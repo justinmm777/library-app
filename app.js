@@ -95,7 +95,7 @@ const addBookToLibrary = function(event) {
     const btnRemove = document.querySelectorAll(".btnRemove");
        btnRemove.forEach((btn, i) => {
            btn.addEventListener("click", (e) => {
-               (e.target.parentElement.parentElement).remove();
+               (e.target.parentElement.parentElement.parentElement).remove();
                myLibrary.splice(i, 1);
            })
        })
