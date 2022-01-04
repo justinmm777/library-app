@@ -134,6 +134,21 @@ input[type=checkbox] {
     
 }
 
+.Read {
+    padding: 1rem;
+    font-size: 1.2rem;
+    margin-top: 1em;
+    border-radius: 10px;
+    background: #8ac9a2;
+}
+.Not-Read{
+    padding: 1rem;
+    font-size: 1.2rem;
+    margin-top: 1em;
+    border-radius: 10px;
+    background: rgb(235, 156, 156)
+}
+
 .btnRemove {
     padding: 1rem;
     font-size: 1.2rem;

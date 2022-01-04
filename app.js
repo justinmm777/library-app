@@ -1,10 +1,10 @@
 let myLibrary = [
-    {
-        title:"The comic book",
-        author:"Justin",
-        pages: 100,
-        isRead: "Read",
-    },
+    // {
+    //     title:"The comic book",
+    //     author:"Justin",
+    //     pages: 100,
+    //     isRead: "Read",
+    // },
 ];
 
 // selecting html elements
@@ -29,17 +29,14 @@ const createCards = function() {
             <h1>${book.title}</h1>
             <h2>${book.author}</h2>
             <h2>${book.pages}</h2>
-            <h2>${book.isRead}</h2>
-            <div class="read">
-                <button class="btnRead">${book.isRead}</button>
+            <div class="btn">
+                <button id="readBtn" class="${book.isRead}">${book.isRead}</button>
             </div>
             <div class="remove">
                 <button class="btnRemove">Remove</button>
             </div>
-            
         </div>`
         displayCards.appendChild(newDiv);
-        
     });
 };
 
@@ -49,11 +46,11 @@ const addBookToLibrary = function(event) {
         title = document.getElementById("title").value;
         author = document.getElementById("author").value;
         pages = document.getElementById("pages").value;
-        bookIsRead = document.getElementById("isRead").checked;
-        if(bookIsRead) {
+        isRead = document.getElementById("isRead").checked;
+        if(isRead) {
             isRead = "Read";
         } else {
-            isRead = "Not Read"
+            isRead = "Not-Read"
         }
      
     const newBookDetails = new Book(title, author, pages, isRead);
@@ -67,7 +64,33 @@ const addBookToLibrary = function(event) {
     document.getElementById("isRead").checked = false;
 
     createCards(); 
+   
+    // Toggle read status
+    const btnRead = document.querySelectorAll("#readBtn");
 
+    btnRead.forEach((btn, i) => {
+        btn.addEventListener("click", function(e) {
+            const button = (e.currentTarget);
+            let readStatus = (myLibrary[i].isRead);
+            if (readStatus === "Not-Read") {
+                myLibrary[i].isRead = "Read";
+            } else {
+               myLibrary[i].isRead = "Not-Read";
+            }
+            button.textContent = myLibrary[i].isRead;
+            button.classList.remove(myLibrary[i].isRead);
+
+            const btnToggle = function(b) {
+                if (b.className == "Not-Read") {
+                    b.className = "Read"
+                } else {
+                    b.className = "Not-Read"
+                }
+            }
+            btnToggle(button);
+    })
+    });
+    
     // Remove books
     const btnRemove = document.querySelectorAll(".btnRemove");
        btnRemove.forEach((btn) => {
@@ -95,7 +118,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
     })
     btnSubmit.addEventListener("click", addBookToLibrary);
     btnSubmit.addEventListener("click", hideEntryForm);
-    
 });
 
 // show entry form
