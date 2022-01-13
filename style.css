@@ -120,8 +120,9 @@ input[type=checkbox] {
 .card {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: column;
+    font: Verdana;
     width: 20rem;
     height: 20rem;
     padding: 2rem;
@@ -133,6 +134,12 @@ input[type=checkbox] {
                 -20px -20px 60px #bdffff;
     
 }
+
+.btn {
+    display: flex;
+    gap: 1.5rem;
+}
+
 
 .Read {
     padding: 1rem;
@@ -149,6 +156,8 @@ input[type=checkbox] {
     background: rgb(235, 156, 156)
 }
 
+
+
 .btnRemove {
     padding: 1rem;
     font-size: 1.2rem;
@@ -156,11 +165,6 @@ input[type=checkbox] {
     border-radius: 10px;
     background: #ef2929;
 }
-
-.error {
-    background-color: red;
-}
-
 
 .footer {
     display: flex;

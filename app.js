@@ -22,18 +22,18 @@ function Book(title, author, pages, isRead) {
 }
 
 // function that loops through the array and displays each book on the page
-const createCards = function() {
+const createCards = function(books) {
     myLibrary.forEach((book, i) => {
         const newDiv = document.createElement("div");
         newDiv.innerHTML = `<div class="card" data-attribute=${i}>
-            <h1>${book.title}</h1>
-            <h2>${book.author}</h2>
-            <h2>${book.pages}</h2>
+            <h2>Title: ${book.title}</h2>
+            <h3>Author: ${book.author}</h3>
+            <h3>Pages: ${book.pages}</h3>
             <div class="btn">
                 <button id="readBtn" class="${book.isRead}">${book.isRead}</button>
-            </div>
-            <div class="remove">
+                <div class="remove">
                 <button class="btnRemove">Remove</button>
+                </div>
             </div>
         </div>`
         displayCards.appendChild(newDiv);
@@ -55,7 +55,6 @@ const addBookToLibrary = function(event) {
      
     const newBookDetails = new Book(title, author, pages, isRead);
     myLibrary.push(newBookDetails);
-    // console.log(myLibrary);
 
     // Clear form
     document.getElementById("title").value = "";
@@ -64,41 +63,19 @@ const addBookToLibrary = function(event) {
     document.getElementById("isRead").checked = false;
 
     createCards(); 
-   
-    // Toggle read status
-    const btnRead = document.querySelectorAll("#readBtn");
+    readStatus()
 
-    btnRead.forEach((btn, i) => {
-        btn.addEventListener("click", function(e) {
-            const button = (e.currentTarget);
-            let readStatus = (myLibrary[i].isRead);
-            if (readStatus === "Not-Read") {
-                myLibrary[i].isRead = "Read";
-            } else {
-               myLibrary[i].isRead = "Not-Read";
-            }
-            button.textContent = myLibrary[i].isRead;
-            button.classList.remove(myLibrary[i].isRead);
-
-            const btnToggle = function(b) {
-                if (b.className == "Not-Read") {
-                    b.className = "Read"
-                } else {
-                    b.className = "Not-Read"
-                }
-            }
-            btnToggle(button);
-    })
-    });
-    
     // Remove books
     const btnRemove = document.querySelectorAll(".btnRemove");
        btnRemove.forEach((btn, i) => {
            btn.addEventListener("click", (e) => {
-               (e.target.parentElement.parentElement.parentElement).remove();
+               (e.target.parentElement.parentElement.parentElement.parentElement).remove();
                myLibrary.splice(i, 1);
            })
        })
+    
+    // Toggle read status
+   
 }
 
 // Show and hide form functions
