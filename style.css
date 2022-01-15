@@ -141,14 +141,14 @@ input[type=checkbox] {
 }
 
 
-.Read {
+.true {
     padding: 1rem;
     font-size: 1.2rem;
     margin-top: 1em;
     border-radius: 10px;
     background: #8ac9a2;
 }
-.Not-Read{
+.false{
     padding: 1rem;
     font-size: 1.2rem;
     margin-top: 1em;

@@ -40,43 +40,37 @@ const createCards = function(books) {
     });
 };
 
-// User Interface
+// Add book to library
 const addBookToLibrary = function(event) {
     event.preventDefault();
         title = document.getElementById("title").value;
         author = document.getElementById("author").value;
         pages = document.getElementById("pages").value;
         isRead = document.getElementById("isRead").checked;
-        if(isRead) {
-            isRead = "Read";
-        } else {
-            isRead = "Not-Read"
-        }
      
     const newBookDetails = new Book(title, author, pages, isRead);
     myLibrary.push(newBookDetails);
+}
 
-    // Clear form
+// Clear form
+const clearForm = () => {
     document.getElementById("title").value = "";
     document.getElementById("author").value = "";
     document.getElementById("pages").value = "";
     document.getElementById("isRead").checked = false;
-
-    createCards(); 
-    readStatus()
-
-    // Remove books
-    const btnRemove = document.querySelectorAll(".btnRemove");
-       btnRemove.forEach((btn, i) => {
-           btn.addEventListener("click", (e) => {
-               (e.target.parentElement.parentElement.parentElement.parentElement).remove();
-               myLibrary.splice(i, 1);
-           })
-       })
-    
-    // Toggle read status
-   
 }
+
+// Remove books
+const removeBook = (book) => {
+    if (book.title === title) {
+        (e.target.parentElement.parentElement.parentElement.parentElement).remove();
+        myLibrary.splice(i, 1);
+    }
+}
+
+// Toggle read status
+   
+
 
 // Show and hide form functions
 const hideEntryForm = () => {
@@ -88,15 +82,32 @@ const showEntryForm = () => {
     const entryForm = document.getElementById("bookEntry");
     entryForm.style.display = "block";
 }
+
+// User Interface  & event listener
 // add book details to myLibrary and display them on DOM
 document.addEventListener("DOMContentLoaded", function(e) {
     hideEntryForm();
-    form.addEventListener('submit', function(e) {
-        displayCards.innerHTML = "";
-        addBookToLibrary(e);
-        hideEntryForm();
-    })
 });
 
 // show entry form
 addBook.addEventListener("click", showEntryForm);
+
+// Submit form event listener
+form.addEventListener('submit', function(e) {
+    displayCards.innerHTML = "";
+    addBookToLibrary(e);
+    hideEntryForm();
+    createCards();
+})
+
+// Remove book form dom
+const removeBtn = document.querySelector('.btnRemove');
+removeBtn.addEventListener('click', (e) => {
+    console.log(e.currentTarget);
+})
+
+
+// Create cards
+createCards();
+
+
