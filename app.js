@@ -1,11 +1,5 @@
-let myLibrary = [
-    {
-        title:"The comic book",
-        author:"Justin",
-        pages: 100,
-        isRead: "Read",
-    },
-];
+const books = JSON.parse(localStorage.getItem('books') || '[]');
+
 
 const form = document.querySelector("form");
 const displayCards = document.querySelector(".displayCards");
@@ -20,20 +14,8 @@ function Book(title, author, pages, isRead) {
     this.isRead = isRead;
 }
 
-Book.prototype.toggleRead = () => {
+Book.prototype.toggleRead = function() {
     this.isRead = !this.isRead;
-}
-
-// Getting user input
-const userInput = (event) => {
-    event.preventDefault();
-        title = document.getElementById("title").value;
-        author = document.getElementById("author").value;
-        pages = document.getElementById("pages").value;
-        isRead = document.getElementById("isRead").checked;
-     
-    const newBook = new Book(title, author, pages, isRead);
-    return newBook;
 }
 
 // Clear form
@@ -43,17 +25,28 @@ const clearForm = () => {
     document.getElementById("pages").value = "";
     document.getElementById("isRead").checked = false;
 }
+// Getting user input and add book
+const userInput = () => {
+        title = document.getElementById("title").value;
+        author = document.getElementById("author").value;
+        pages = document.getElementById("pages").value;
+        isRead = document.getElementById("isRead").checked;
+     
+    const newBook = new Book(title, author, pages, isRead);
 
-const updateLibrary = (book) => {
-    myLibrary.push(book);
+    books.push(newBook);
+    localStorage.setItem('books', JSON.stringify(books));
+
+    clearForm();
+    createBook(newBook);
 }
 
 
+
 // function to create cards
-const displayBooks = () => {
-    myLibrary.forEach((book, i) => {
-        const newDiv = document.createElement("div");
-        newDiv.innerHTML = `<div class="card">
+const createBook = (book) => {
+    const newDiv = document.createElement("div");
+    newDiv.innerHTML = `<div class="card">
         <h2>Title: ${book.title}</h2>
         <h3>Author: ${book.author}</h3>
         <h3>Pages: ${book.pages}</h3>
@@ -65,17 +58,8 @@ const displayBooks = () => {
         </div>
     </div>`
     displayCards.appendChild(newDiv);
-    });
 }
 
-// Local Storage
-const storeBooks = (book) => {
-    localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
-}
-
-const getBooks = () => {
-    myLibrary = JSON.parse(localStorage.getItem('myLibrary'));
-}
 
 
 // Show and hide form
@@ -89,54 +73,61 @@ const showEntryForm = () => {
     entryForm.style.display = "block";
 }
 
-// Remove book from Dom
-const removeBook = (event) => {
-    event.target.parent
-
+// remove book from local storage
+const removeBook = (index) => {
+    books.splice(index, 1);
+    localStorage.setItem('books', JSON.stringify(books));
 }
+
+// Show books on the page
+const displayBooks = (books) => {
+    books.forEach((book) => {
+        createBook(book);
+    })
+}
+
+
 
 // User Interface  & event listener
 // add book details to myLibrary and display them on DOM
 document.addEventListener("DOMContentLoaded", function(e) {
     hideEntryForm();
-    getBooks();
-    displayBooks();
+    displayBooks(books);
+
 
         // show entry form
     addBook.addEventListener("click", showEntryForm);
 
     // Submit form event listener
     form.addEventListener('submit', function(e) {
-        displayCards.innerHTML = "";
-        updateLibrary(newBook);
+        // e.preventDefault();
         hideEntryForm();
-
-        // Remove book form dom
-        const removeBtn = document.querySelectorAll('.btnRemove');
-
-        removeBtn.forEach((btn, i) => {
-            btn.addEventListener('click', e => {
-                (e.currentTarget.parentElement.parentElement.parentElement.parentElement).remove();
-                myLibrary.splice(i, 1);
-        })
-        });
-
+        userInput();
     })
 
-    // Toggle read status
-    const toggleRead = (book) => {
-        this.isRead = !this.isRead;
-        storeBooks(book)
-    }
 
-    const btnRead = document.getElementById('readBtn');
-        btnRead.addEventListener('click', toggleRead());
-
-
-
-
+    // Remove book form dom
+    const removeBtn = document.querySelectorAll('.btnRemove');
+    
+    removeBtn.forEach((btn, i) => {
+        btn.addEventListener('click', (e, i) => {
+            (e.currentTarget.parentElement.parentElement.parentElement.parentElement).remove();
+            removeBook(i);
+        });
+    })
+    
+        
+        
+    
+    
+    
+        // Toggle read status
+    
+        const btnRead = document.getElementById('readBtn');
+    
 
 });
+
 
 
 
