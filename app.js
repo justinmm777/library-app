@@ -1,4 +1,4 @@
-const books = JSON.parse(localStorage.getItem('books') || '[]');
+let books = JSON.parse(localStorage.getItem('books') || '[]');
 
 
 const form = document.querySelector("form");
@@ -18,6 +18,7 @@ Book.prototype.toggleRead = function() {
     this.isRead = !this.isRead;
 }
 
+
 // Clear form
 const clearForm = () => {
     document.getElementById("title").value = "";
@@ -31,6 +32,12 @@ const userInput = () => {
         author = document.getElementById("author").value;
         pages = document.getElementById("pages").value;
         isRead = document.getElementById("isRead").checked;
+
+        if (isRead) {
+            isRead = "Read";
+        } else {
+            isRead = "Not-Read"
+        }
      
     const newBook = new Book(title, author, pages, isRead);
 
@@ -46,8 +53,7 @@ const userInput = () => {
 // function to create cards
 const createBook = (book) => {
     const newDiv = document.createElement("div");
-    newDiv.innerHTML = `<div class="card">
-        <h2>Title: ${book.title}</h2>
+    newDiv.innerHTML = `<div class="card"><h2>${book.title}</h2>
         <h3>Author: ${book.author}</h3>
         <h3>Pages: ${book.pages}</h3>
         <div class="btn">
@@ -73,17 +79,20 @@ const showEntryForm = () => {
     entryForm.style.display = "block";
 }
 
-// remove book from local storage
-const removeBook = (index) => {
-    books.splice(index, 1);
-    localStorage.setItem('books', JSON.stringify(books));
-}
+
 
 // Show books on the page
 const displayBooks = (books) => {
     books.forEach((book) => {
         createBook(book);
     })
+}
+
+// Remove book
+const removeBook = function(title) {
+    let index = books.findIndex(book => book.title === title);
+    console.log(index)
+    books.splice(index, 1);
 }
 
 
@@ -107,14 +116,19 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
 
     // Remove book form dom
-    const removeBtn = document.querySelectorAll('.btnRemove');
-    
-    removeBtn.forEach((btn, i) => {
-        btn.addEventListener('click', (e, i) => {
-            (e.currentTarget.parentElement.parentElement.parentElement.parentElement).remove();
-            removeBook(i);
-        });
+        const removeBtn = document.querySelectorAll('.btnRemove');
+        removeBtn.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                let title = (e.currentTarget.parentElement.parentElement.parentElement.firstChild.innerHTML);
+                removeBook(title);
+                console.log(title);
+                (e.currentTarget.parentElement.parentElement.parentElement.parentElement).remove();
+
+        })
+        
     })
+
+    
     
         
         
