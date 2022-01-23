@@ -17,7 +17,9 @@ function Book(title, author, pages, isRead) {
 Book.prototype.toggleRead = function() {
     this.isRead = !this.isRead;
 }
-
+function saveBooks() {
+    localStorage.setItem('books', JSON.stringify(books));
+}
 
 // Clear form
 const clearForm = () => {
@@ -42,7 +44,7 @@ const userInput = () => {
     const newBook = new Book(title, author, pages, isRead);
 
     books.push(newBook);
-    localStorage.setItem('books', JSON.stringify(books));
+    saveBooks();
 
     clearForm();
     createBook(newBook);
@@ -121,9 +123,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
             btn.addEventListener('click', (e) => {
                 let title = (e.currentTarget.parentElement.parentElement.parentElement.firstChild.innerHTML);
                 removeBook(title);
-                console.log(title);
                 (e.currentTarget.parentElement.parentElement.parentElement.parentElement).remove();
-
+                saveBooks();
         })
         
     })
