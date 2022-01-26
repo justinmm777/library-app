@@ -110,6 +110,15 @@ const toggleRead = function(title) {
     saveBooks();
 }
 
+// remove btn classlist toggle
+const readBtnClassToggle = function(btn) {
+    if(btn.classList.contains('Read')){
+        btn.classList.add('Not-Read')
+    } else {
+        btn.classList.remove('Not-Read')
+        btn.classList.add('Read')
+    }
+}
 
 
 // User Interface  & event listener
@@ -156,6 +165,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
         }
 
         toggleRead(title);
+        readBtnClassToggle(btn);
            
        })
     });
