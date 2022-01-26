@@ -14,9 +14,9 @@ function Book(title, author, pages, isRead) {
     this.isRead = isRead;
 }
 
-Book.prototype.toggleRead = function() {
-    this.isRead = !this.isRead;
-}
+// Book.prototype.toggleRead = function() {
+//     this.isRead = !this.isRead;
+// }
 function saveBooks() {
     localStorage.setItem('books', JSON.stringify(books));
 }
@@ -59,13 +59,14 @@ const createBook = (book) => {
         <h3>Author: ${book.author}</h3>
         <h3>Pages: ${book.pages}</h3>
         <div class="btn">
-            <button id="readBtn" class="${book.isRead}">${book.isRead}</button>
+            <button id="" class="readBtn ${book.isRead}">${book.isRead}</button>
             <div class="remove">
             <button class="btnRemove">Remove</button>
             </div>
         </div>
     </div>`
     displayCards.appendChild(newDiv);
+
 }
 
 
@@ -93,8 +94,20 @@ const displayBooks = (books) => {
 // Remove book
 const removeBook = function(title) {
     let index = books.findIndex(book => book.title === title);
-    console.log(index)
     books.splice(index, 1);
+}
+
+// Toggle read
+const toggleRead = function(title) {
+    const book = books.find(book => book.title === title);
+    console.log(book);
+    // book.isRead = !book.isRead;
+    if(book.isRead === "Read") {
+        book.isRead = "Not-Read"
+    } else {
+        book.isRead = "Read"
+    }
+    saveBooks();
 }
 
 
@@ -126,20 +139,26 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 (e.currentTarget.parentElement.parentElement.parentElement.parentElement).remove();
                 saveBooks();
         })
-        
-    })
+    });
 
-    
-    
+     // Toggle read status
+    const btnRead = document.querySelectorAll('.readBtn');
+
+    btnRead.forEach((btn) => {
+       btn.addEventListener('click', (e) => {
+        let title = (e.currentTarget.parentElement.parentElement.firstChild.innerHTML);
+        console.log(title)
         
-        
-    
-    
-    
-        // Toggle read status
-    
-        const btnRead = document.getElementById('readBtn');
-    
+        if(btn.textContent === 'Read') {
+            btn.textContent = 'Not-Read'
+        } else {
+            btn.textContent = 'Read'
+        }
+
+        toggleRead(title);
+           
+       })
+    });
 
 });
 
