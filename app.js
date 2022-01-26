@@ -114,6 +114,7 @@ const toggleRead = function(title) {
 const readBtnClassToggle = function(btn) {
     if(btn.classList.contains('Read')){
         btn.classList.add('Not-Read')
+        btn.classList.remove('Read')
     } else {
         btn.classList.remove('Not-Read')
         btn.classList.add('Read')
