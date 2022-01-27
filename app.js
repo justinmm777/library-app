@@ -18,35 +18,6 @@ function saveBooks() {
     localStorage.setItem('books', JSON.stringify(books));
 }
 
-// Clear form
-const clearForm = () => {
-    document.getElementById("title").value = "";
-    document.getElementById("author").value = "";
-    document.getElementById("pages").value = "";
-    document.getElementById("isRead").checked = false;
-}
-// Getting user input and add book
-const userInput = () => {
-        title = document.getElementById("title").value;
-        author = document.getElementById("author").value;
-        pages = document.getElementById("pages").value;
-        isRead = document.getElementById("isRead").checked;
-
-        if (isRead) {
-            isRead = "Read";
-        } else {
-            isRead = "Not-Read"
-        }
-     
-    const newBook = new Book(title, author, pages, isRead);
-
-    books.push(newBook);
-    saveBooks();
-
-    clearForm();
-    createBook(newBook);
-}
-
 // function to create cards
 const createBook = (book) => {
     const newDiv = document.createElement("div");
@@ -54,7 +25,7 @@ const createBook = (book) => {
         <h3>Author: ${book.author}</h3>
         <h3>Pages: ${book.pages}</h3>
         <div class="btn">
-            <button id="" class="readBtn ${book.isRead}">${book.isRead}</button>
+            <button onclick= "btnClick()" id="" class="readBtn ${book.isRead}">${book.isRead}</button>
             <div class="remove">
             <button class="btnRemove">Remove</button>
             </div>
@@ -63,6 +34,16 @@ const createBook = (book) => {
     displayCards.appendChild(newDiv);
 
 }
+// Clear form
+const clearForm = () => {
+    document.getElementById("title").value = "";
+    document.getElementById("author").value = "";
+    document.getElementById("pages").value = "";
+    document.getElementById("isRead").checked = false;
+}
+
+
+
 
 // Show and hide form
 const hideEntryForm = () => {
@@ -120,6 +101,29 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
         // show entry form
     addBook.addEventListener("click", showEntryForm);
+
+    // Getting user input and add book
+const userInput = () => {
+    title = document.getElementById("title").value;
+    author = document.getElementById("author").value;
+    pages = document.getElementById("pages").value;
+    isRead = document.getElementById("isRead").checked;
+
+    if (isRead) {
+        isRead = "Read";
+    } else {
+        isRead = "Not-Read"
+    }
+ 
+const newBook = new Book(title, author, pages, isRead);
+
+books.push(newBook);
+
+clearForm();
+createBook(newBook);
+saveBooks();
+}
+
 
     // Submit form event listener
     form.addEventListener('submit', function(e) {
