@@ -18,6 +18,7 @@ function saveBooks() {
     localStorage.setItem('books', JSON.stringify(books));
 }
 
+
 // function to create cards
 const createBook = (book) => {
     const newDiv = document.createElement("div");
@@ -25,7 +26,7 @@ const createBook = (book) => {
         <h3>Author: ${book.author}</h3>
         <h3>Pages: ${book.pages}</h3>
         <div class="btn">
-            <button onclick= "btnClick()" id="" class="readBtn ${book.isRead}">${book.isRead}</button>
+            <button id="" class="readBtn ${book.isRead}">${book.isRead}</button>
             <div class="remove">
             <button class="btnRemove">Remove</button>
             </div>
@@ -72,8 +73,7 @@ const removeBook = function(title) {
 // Toggle read
 const toggleRead = function(title) {
     const book = books.find(book => book.title === title);
-    console.log(book);
-    // book.isRead = !book.isRead;
+    
     if(book.isRead === "Read") {
         book.isRead = "Not-Read"
     } else {
@@ -149,22 +149,15 @@ saveBooks();
     btnRead.forEach((btn) => {
        btn.addEventListener('click', (e) => {
         let title = (e.currentTarget.parentElement.parentElement.firstChild.innerHTML);
-        console.log(title)
         
         if(btn.textContent === 'Read') {
             btn.textContent = 'Not-Read'
         } else {
             btn.textContent = 'Read'
         }
-
         toggleRead(title);
+        // toggleRead(title);
         readBtnClassToggle(btn);
        })
     });
 });
-
-
-
-
-
-
